@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
 
-    before_action :set_page, except: [:index, :new, :create]
+    before_action :set_page, except: [:index, :new, :create, :show]
     # before_action :set_page, only: [:show, :edit, :update, :destroy]
 
     def index
@@ -8,7 +8,10 @@ class PagesController < ApplicationController
     end  
     
     def show
-        # @page = Page.find(params[:id])
+        @page = Page.find(params[:id])
+        rescue ActiveRecord::RecordNotFound
+        flash[:notice] = "Wrong post it"
+        redirect_to action: :index
         # render text: @page.title #page's title gets display
     end  
 
