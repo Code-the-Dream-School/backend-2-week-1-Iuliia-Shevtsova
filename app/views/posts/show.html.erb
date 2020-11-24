@@ -8,10 +8,36 @@
 <!-- Add a new HTML paragraph tag... -->
 <p>
   <strong>Body:</strong>
-  <!-- With the post body embedded inside. -->
   <%= @post.body %>
 </p>
 
+<div id="comments">
+  <h1>Comments</h1>
+  <!-- The `comments` method returns an array-like collection, so we can call `each` on it: -->
+  <!-- We're going to set one local variable, comment, and pass our current comment as the value of that comment variable. -->
+  
+  <!-- 
+    <% @post.comments.each do |comment| %>
+    <%= render partial: "comments/comment", locals: {comment: comment}%>
+    <% end %> 
+  -->
+  
+  <!-- This is the same as a loop upper 
+       as: argument takes symbol with name of local variable to assign -->
+  <!-- <%= render partial: "comments/comment", collection: @post.comments, as: :comment %> -->
+
+  <!-- collection: argument automatically assigns current member to local variable 
+  with same name as the partial, so we can remove as: :comment: -->
+  <!-- <%= render partial: "comments/comment", collection: @post.comments %> -->
+
+  <!-- here's the ultimate shortcut -->
+  <%= render @post.comments %>
+</div>
+
+  <!-- Add a comment: -->
+  <h2>Add a Comment</h2>
+  <%= render partial: "comments/form", locals: {comment: @post.comments.new} %>
+</div>
 
 <%= link_to 'Edit', edit_post_path(@post) %> |
 <%= link_to 'Back', posts_path %>
